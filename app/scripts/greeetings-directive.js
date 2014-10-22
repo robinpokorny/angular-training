@@ -5,10 +5,11 @@
     .module('app')
     .directive('greetings', greetings);
 
-  function greetings() {
+  greetings.$inject = ['pokedex'];
+  function greetings(pokedex) {
     var directive = {
       restrict: 'EA',
-      template: '<h2>Hello, {{vm.name}}!</h2>',
+      template: '<h2>Hello, {{vm.pokemons.length}} pokémons in {{::vm.name}}!</h2>',
       controller: GreetingsController,
       controllerAs: 'vm'
     };
@@ -17,7 +18,8 @@
     function GreetingsController() {
       var vm = this;
 
-      vm.name = 'Angular'
+      vm.name = 'Angular';
+      vm.pokemons = pokedex.getPokemons();
     }
   }
 
