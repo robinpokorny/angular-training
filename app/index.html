@@ -6,7 +6,12 @@
 </head>
 <body ng-app="app">
     <div ng-controller="MainController as main">
-
+        <h1>Pokémon</h1>
+        <ul>
+            <li ng-repeat="pokemon in main.pokemons">
+                {{pokemon.name}} ({{main.getIdFromUri(pokemon.resource_uri)}})
+            </li>
+        </ul>
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>

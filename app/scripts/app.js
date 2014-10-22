@@ -8,6 +8,15 @@
   function MainController() {
     var vm = this;
 
+    vm.pokemons = pokemons;
+    vm.getIdFromUri = getIdFromUri;
+
+    function getIdFromUri(uri) {
+      var re = /(\d+)\/$/,
+        id = uri.match(re)[1];
+
+      return parseInt(id, 10);
+    }
   }
 
   var pokemons = [
