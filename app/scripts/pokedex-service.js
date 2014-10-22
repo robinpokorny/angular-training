@@ -5,8 +5,9 @@
     .module('app')
     .factory('pokedex', pokedex);
 
-  function pokedex() {
-    var pokemons = pokemonsRaw.map(addIdToPokemon);
+  pokedex.$inject = ['$http'];
+  function pokedex($http) {
+    var pokemons = [];
     var service = {
       getPokemons: getPokemons,
       addPokemon: addPokemon
@@ -14,7 +15,18 @@
     return service;
 
     function getPokemons() {
-      return pokemons;
+      //return $http.get('api/pokedex.json')
+      return $http.get('http://pokeapi.co/api/v1/pokedex/1/')
+        .then(getPokemonsComplete)
+        .catch(getPokemonsFailed);
+
+      function getPokemonsComplete(response) {
+        return response.data.pokemon.map(addIdToPokemon);
+      }
+
+      function getPokemonsFailed(error) {
+        console.log('XHR Failed for getPokemons.' + error.data);
+      }
     }
 
     function addPokemon(pokemon) {
@@ -33,51 +45,4 @@
       return pokemon;
     }
   }
-
-  var pokemonsRaw = [
-    {
-      "name": "rattata",
-      "resource_uri": "api/v1/pokemon/19/"
-    },
-    {
-      "name": "charmander",
-      "resource_uri": "api/v1/pokemon/4/"
-    },
-    {
-      "name": "charmeleon",
-      "resource_uri": "api/v1/pokemon/5/"
-    },
-    {
-      "name": "wartortle",
-      "resource_uri": "api/v1/pokemon/8/"
-    },
-    {
-      "name": "blastoise",
-      "resource_uri": "api/v1/pokemon/9/"
-    },
-    {
-      "name": "caterpie",
-      "resource_uri": "api/v1/pokemon/10/"
-    },
-    {
-      "name": "metapod",
-      "resource_uri": "api/v1/pokemon/11/"
-    },
-    {
-      "name": "butterfree",
-      "resource_uri": "api/v1/pokemon/12/"
-    },
-    {
-      "name": "spearow",
-      "resource_uri": "api/v1/pokemon/21/"
-    },
-    {
-      "name": "kakuna",
-      "resource_uri": "api/v1/pokemon/14/"
-    },
-    {
-      "name": "beedrill",
-      "resource_uri": "api/v1/pokemon/15/"
-    }
-  ]
 }());
