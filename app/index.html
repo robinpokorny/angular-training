@@ -7,9 +7,10 @@
 <body ng-app="app">
     <div ng-controller="MainController as main">
         <h1>Pokémon</h1>
+        <input ng-model="search.name" type="text"/>
         <ul>
-            <li ng-repeat="pokemon in main.pokemons">
-                {{pokemon.name}} ({{pokemon.id}})
+            <li ng-repeat="pokemon in main.pokemons | filter:search | orderBy:'id' | limitTo:10 ">
+                {{ ::pokemon.name | uppercase}} ({{ ::pokemon.id | number:2 }})
             </li>
         </ul>
     </div>
