@@ -7,6 +7,11 @@
         .alternative {
             color: red;
         }
+        .panel {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin-bottom: 4px;
+        }
     </style>
 </head>
 <body ng-app="app">
@@ -16,10 +21,13 @@
         <input ng-model="search.name" type="text"/>
         <ul>
             <li ng-repeat="pokemon in main.pokemons | filter:search | orderBy:'id' | limitTo:10">
-                {{$index + 1}}. <poke-detail pokemon="pokemon" emphasize-class="alternative"></poke-detail>
+                <panel>
+                    {{$index + 1}}.
+                    <poke-detail pokemon="pokemon" emphasize-class="alternative"></poke-detail>
+                </panel>
             </li>
         </ul>
-        <input type="text" ng-model="main.newPokemon.name" placeholder="Pikacu">
+        <input type="text" ng-model="main.newPokemon.name" placeholder="Pikachu">
         <input type="number" ng-model="main.newPokemon.id" placeholder="2">
         <button ng-click="main.addNewPokemon()">Přidat</button>
         <div greetings=""></div>
@@ -30,5 +38,6 @@
     <script src="scripts/main-controller.js"></script>
     <script src="scripts/greeetings-directive.js"></script>
     <script src="scripts/poke-detail-directive.js"></script>
+    <script src="scripts/panel-directive.js"></script>
 </body>
 </html>
