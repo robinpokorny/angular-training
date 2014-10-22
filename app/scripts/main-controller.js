@@ -8,19 +8,9 @@
   MainController.$inject = ['pokedex'];
   function MainController(pokedex) {
     var vm = this;
-    vm.pokemons = [];
+    vm.pokemons = pokedex.getPokemons();
     vm.newPokemon = {};
     vm.addNewPokemon = addNewPokemon;
-
-    loadPokemons();
-
-    function loadPokemons() {
-      return pokedex.getPokemons()
-        .then(function(data) {
-          vm.pokemons = data;
-          return vm.pokemons;
-        });
-    }
 
     function addNewPokemon() {
       if (vm.newPokemon.name && vm.newPokemon.id) {

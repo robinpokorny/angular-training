@@ -5,32 +5,30 @@
     .module('app')
     .factory('pokedex', pokedex);
 
-  pokedex.$inject = ['$http'];
-  function pokedex($http) {
+  pokedex.$inject = ['pokeApi'];
+  function pokedex(pokeApi) {
+
     var pokemons = [];
     var service = {
       getPokemons: getPokemons,
       addPokemon: addPokemon
     };
+    loadPokemons();
     return service;
 
-    function getPokemons() {
-      //return $http.get('api/pokedex.json')
-      return $http.get('http://pokeapi.co/api/v1/pokedex/1/')
-        .then(getPokemonsComplete)
-        .catch(getPokemonsFailed);
-
-      function getPokemonsComplete(response) {
-        return response.data.pokemon.map(addIdToPokemon);
-      }
-
-      function getPokemonsFailed(error) {
-        console.log('XHR Failed for getPokemons.' + error.data);
-      }
+    function loadPokemons() {
+      return pokeApi.getPokemons()
+        .then(function(data) {
+          data.map(addIdToPokemon).forEach(addPokemon);
+          return pokemons;
+        });
     }
 
+    function getPokemons() {
+      return pokemons;
+    }
     function addPokemon(pokemon) {
-      pokemons.push(pokemon)
+      pokemons.push(pokemon);
     }
 
     function getIdFromUri(uri) {

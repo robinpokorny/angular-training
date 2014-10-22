@@ -19,17 +19,7 @@
       var vm = this;
 
       vm.name = 'Angular';
-      vm.pokemons = [];
-
-      loadPokemons();
-
-      function loadPokemons() {
-        return pokedex.getPokemons()
-          .then(function(data) {
-            vm.pokemons = data;
-            return vm.pokemons;
-          });
-      }
+      vm.pokemons = pokedex.getPokemons();
     }
   }
 
