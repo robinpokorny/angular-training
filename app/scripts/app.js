@@ -7,8 +7,17 @@
 
   function MainController() {
     var vm = this;
-
     vm.pokemons = pokemons.map(addIdToPokemon);
+    vm.newPokemon = {};
+    vm.addNewPokemon = addNewPokemon;
+
+    function addNewPokemon() {
+      if (vm.newPokemon.name && vm.newPokemon.id) {
+        vm.newPokemon.resource_uri = 'api/v1/pokemon/' + vm.newPokemon.id + '/';
+        vm.pokemons.push(vm.newPokemon);
+        vm.newPokemon = {};
+      }
+    }
 
     function getIdFromUri(uri) {
       var re = /(\d+)\/$/,

@@ -3,16 +3,24 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Ukázka AngularJS</title>
+    <style>
+        .alternative {
+            color: darkred;
+        }
+    </style>
 </head>
 <body ng-app="app">
     <div ng-controller="MainController as main">
         <h1>Pokémon</h1>
         <input ng-model="search.name" type="text"/>
         <ul>
-            <li ng-repeat="pokemon in main.pokemons | filter:search | orderBy:'id' | limitTo:10 ">
-                {{ ::pokemon.name | uppercase}} ({{ ::pokemon.id | number:2 }})
+            <li ng-repeat="pokemon in main.pokemons | filter:search | orderBy:'id' | limitTo:10">
+                {{$index + 1}}. <span ng-class="{alternative: $odd}" ng-bind="::pokemon.name"></span> ({{ ::pokemon.id }})
             </li>
         </ul>
+        <input type="text" ng-model="main.newPokemon.name" placeholder="Pikacu">
+        <input type="number" ng-model="main.newPokemon.id" placeholder="2">
+        <button ng-click="main.addNewPokemon()">Přidat</button>
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>
