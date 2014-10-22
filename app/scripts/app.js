@@ -8,14 +8,18 @@
   function MainController() {
     var vm = this;
 
-    vm.pokemons = pokemons;
-    vm.getIdFromUri = getIdFromUri;
+    vm.pokemons = pokemons.map(addIdToPokemon);
 
     function getIdFromUri(uri) {
       var re = /(\d+)\/$/,
         id = uri.match(re)[1];
 
       return parseInt(id, 10);
+    }
+
+    function addIdToPokemon(pokemon) {
+      pokemon.id = getIdFromUri(pokemon.resource_uri);
+      return pokemon;
     }
   }
 
